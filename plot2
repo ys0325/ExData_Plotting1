@@ -1,0 +1,12 @@
+AllData<-read.table("./household_power_consumption.txt",stringsAsFactors = FALSE, header = TRUE, sep = ";")
+DT<-strptime(paste(AllData$Date, AllData$Time, sep = " "), "%d/%m/%Y %H:%M:%S")
+AllData<-cbind(AllData, DT)
+AllData$Date<-as.Date(AllData$Date, format="%d/%m/%Y")
+AllData$Time<-format(AllData$Time, format = "%H:%M:%S")
+AllData$Global_active_power<-as.numeric(AllData$Global_active_power)
+Global_active_power<-as.numeric(data1$Global_active_power)
+data1<-subset(AllData, Date == "2007-02-01" | Date =="2007-02-02")
+
+png("plot2.png")
+with(data1, plot(DT, Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (killowatts)"))
+dev.off()
